@@ -1,0 +1,30 @@
+# intentos
+$intentos = 3
+
+# el bucle
+for ($i = 1; $i -le $intentos; $i++) {
+    # fecha y hora exacta de la verificación
+    $fechaHora = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    Write-Host "Verificación $i: $fechaHora"
+
+    # cmdlet para obtener los adaptadores de red activos
+    $adaptadores = Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }
+   
+    # mostramos los adaptadores de red activos
+    if ($adaptadores) {
+        Write-Host "Adaptadores de red activos:"
+        $adaptadores | ForEach-Object { Write-Host $_.Name }
+    } else {
+        Write-Host "No hay adaptadores de red activos."
+    }
+
+    # condicional para verificar si el número de la iteración es par o impar
+    if ($i % 2 -eq 0) {
+        Write-Host "La verificación número $i es par."
+    } else {
+        Write-Host "La verificación número $i es impar."
+    }
+
+    # esperamos un segundo antes de la siguiente iteración
+    Start-Sleep -Seconds 1
+}
